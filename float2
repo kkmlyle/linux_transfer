@@ -1,0 +1,28 @@
+def q15_to_float(q15_value):
+    # 16位Q15格式的有符号定点数，其中最高位是符号位
+    # 定义整数部分位数和小数部分位数
+    integer_bits = 1
+    fractional_bits = 15
+    
+    # 获取符号位
+    sign = -1 if (q15_value & 0x8000) else 1
+    
+    # 获取整数部分和小数部分
+    integer_part = (q15_value >> fractional_bits) & 0x7FFF
+    fractional_part = q15_value & 0x7FFF
+    
+    # 计算小数部分的值
+    fractional_value = fractional_part / (2 ** fractional_bits)
+    
+    # 计算整数部分的值
+    integer_value = integer_part * sign
+    
+    # 结合整数和小数部分
+    result = integer_value + fractional_value
+    
+    return result
+
+# 示例用法
+q15_value = 0b1101001001001101  # 一个示例的Q15格式有符号定点数
+decimal_value = q15_to_float(q15_value)
+print(decimal_value)
